@@ -8,6 +8,9 @@ public class App {
 
     private static final Logger logger = Logger.getLogger(App.class.getName());
 
+    // ✅ Define a constant for the username
+    private static final String ADMIN_USER = "admin";
+
     public static void main(String[] args) {
 
         Calculator calc = new Calculator();
@@ -17,22 +20,22 @@ public class App {
         UserService service = new UserService();
 
         try {
-            boolean exists = service.findUser("admin");
+            boolean exists = service.findUser(ADMIN_USER);
 
             if (exists) {
-                logger.info(() -> String.format("User '%s' found.", "admin"));
+                logger.info(() -> String.format("User '%s' found.", ADMIN_USER));
 
                 // ⚠ Dangerous operation — do only if required
-                boolean deleted = service.deleteUser("admin");
+                boolean deleted = service.deleteUser(ADMIN_USER);
 
                 if (deleted) {
-                    logger.info(() -> String.format("User '%s' deleted successfully.", "admin"));
+                    logger.info(() -> String.format("User '%s' deleted successfully.", ADMIN_USER));
                 } else {
-                    logger.warning(() -> String.format("User '%s' could not be deleted.", "admin"));
+                    logger.warning(() -> String.format("User '%s' could not be deleted.", ADMIN_USER));
                 }
 
             } else {
-                logger.warning(() -> String.format("User '%s' not found.", "admin"));
+                logger.warning(() -> String.format("User '%s' not found.", ADMIN_USER));
             }
 
         } catch (SQLException e) {
