@@ -6,13 +6,13 @@ import java.util.logging.Logger;
 
 public class App {
 
-    // Create a logger for this class
     private static final Logger logger = Logger.getLogger(App.class.getName());
 
     public static void main(String[] args) {
 
         Calculator calc = new Calculator();
-        logger.info("Calculation result: " + calc.calculate(10, 5, "add"));
+        int result = calc.calculate(10, 5, "add");
+        logger.info(() -> String.format("Calculation result: %d", result));
 
         UserService service = new UserService();
 
@@ -20,19 +20,19 @@ public class App {
             boolean exists = service.findUser("admin");
 
             if (exists) {
-                logger.info("User 'admin' found.");
+                logger.info(() -> String.format("User '%s' found.", "admin"));
 
                 // ⚠ Dangerous operation — do only if required
                 boolean deleted = service.deleteUser("admin");
 
                 if (deleted) {
-                    logger.info("User 'admin' deleted successfully.");
+                    logger.info(() -> String.format("User '%s' deleted successfully.", "admin"));
                 } else {
-                    logger.warning("User 'admin' could not be deleted.");
+                    logger.warning(() -> String.format("User '%s' could not be deleted.", "admin"));
                 }
 
             } else {
-                logger.warning("User 'admin' not found.");
+                logger.warning(() -> String.format("User '%s' not found.", "admin"));
             }
 
         } catch (SQLException e) {
