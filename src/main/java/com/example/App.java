@@ -1,18 +1,6 @@
-// package main.java.com.example;
-
-// public class App {
-
-//     public static void main(String[] args) throws Exception {
-// Calculator calc = new Calculator();
-// System.out.println(calc.calculate(10, 5, "add-again"));
-// UserService service = new UserService();
-// service.findUser("admin");
-// service.deleteUser("admin"); // NEW dangerous call
-
-//     }
-// }
-
 package com.example;
+
+import java.sql.SQLException;
 
 public class App {
 
@@ -22,9 +10,28 @@ public class App {
         System.out.println(calc.calculate(10, 5, "add"));
 
         UserService service = new UserService();
-        service.findUser("admin");
 
-        // Dangerous operation (example)
-        service.deleteUser("admin");
+        try {
+            boolean exists = service.findUser("admin");
+
+            if (exists) {
+                System.out.println("User 'admin' found.");
+
+                // ⚠ Dangerous operation — do only if required
+                boolean deleted = service.deleteUser("admin");
+
+                if (deleted) {
+                    System.out.println("User 'admin' deleted successfully.");
+                } else {
+                    System.out.println("User 'admin' could not be deleted.");
+                }
+
+            } else {
+                System.out.println("User 'admin' not found.");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Database error occurred: " + e.getMessage());
+        }
     }
 }
