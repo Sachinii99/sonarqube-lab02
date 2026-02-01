@@ -1,45 +1,3 @@
-// package main.java.com.example;
-
-// import java.sql.Connection;
-// import java.sql.DriverManager;
-// import java.sql.Statement;
-
-// public class UserService {
-
-//     // SECURITY ISSUE: Hardcoded credentials
-//     private String password = "admin123";
-
-//     // VULNERABILITY: SQL Injection
-//     public void findUser(String username) throws Exception {
-
-//         Connection conn =
-//             DriverManager.getConnection("jdbc:mysql://localhost/db",
-//                     "root", password);
-
-//         Statement st = conn.createStatement();
-
-//         String query =
-//             "SELECT * FROM users WHERE name = '" + username + "'";
-
-//         st.executeQuery(query);
-//     }
-//     // EVEN WORSE: another SQL injection
-//         public void deleteUser(String username) throws Exception {
-//         Connection conn =
-//         DriverManager.getConnection("jdbc:mysql://localhost/db",
-//         "root", password);
-//         Statement st = conn.createStatement();
-//         String query =
-//         "DELETE FROM users WHERE name = '" + username + "'";
-//         st.execute(query);
-//         }
-
-
-//     // SMELL: Unused method
-//     public void notUsed() {
-//         System.out.println("I am never called");
-//     }
-// }
 package com.example;
 
 import java.sql.Connection;
@@ -49,13 +7,12 @@ import java.sql.SQLException;
 
 public class UserService {
 
-    // Credentials should come from environment variables
     private static final String DB_URL =
-            System.getenv("DB_URL");      // e.g. jdbc:mysql://localhost/db
+            System.getenv("DB_URL");
     private static final String DB_USER =
-            System.getenv("DB_USER");     // e.g. root
+            System.getenv("DB_USER");
     private static final String DB_PASSWORD =
-            System.getenv("DB_PASSWORD"); // no hardcoding
+            System.getenv("DB_PASSWORD");
 
     public void findUser(String username) throws SQLException {
 
@@ -67,6 +24,7 @@ public class UserService {
             ps.setString(1, username);
             ps.executeQuery();
         }
+        // ✅ Connection and Statement auto-closed here
     }
 
     public void deleteUser(String username) throws SQLException {
@@ -79,5 +37,6 @@ public class UserService {
             ps.setString(1, username);
             ps.executeUpdate();
         }
+        // ✅ Connection and Statement auto-closed here
     }
 }
