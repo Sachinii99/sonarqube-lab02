@@ -41,4 +41,8 @@ public class Calculator {
     public int sumValues(int a, int b) {
         return a + b;
     }
+    // INTENTIONAL DUPLICATION
+    public int addAgain(int a, int b) {
+    return a + b;
+    }
 }
